@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://boql3uypepqrx"]
+
+[ext_resource type="Script" uid="uid://x6sa1l6opjgr" path="res://scripts/player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://xpd24lrqbfrk" path="res://assets/robot.gltf" id="2_qhqgy"]
+[ext_resource type="FontFile" uid="uid://cqrd044jiji3j" path="res://assets/CabalBold-78yP.ttf" id="3_dqkch"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g2els"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qhqgy"]
+font = ExtResource("3_dqkch")
+font_size = 27
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_g2els"]
+font = ExtResource("3_dqkch")
+font_size = 27
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qhqgy"]
+radius = 0.773535
+height = 2.09932
+
+[node name="player" type="RigidBody3D" groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0187526, 0, -0.0016737)
+lock_rotation = true
+script = ExtResource("1_4flbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.237273, 0)
+shape = SubResource("CapsuleShape3D_g2els")
+
+[node name="TwistPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="robot2" parent="TwistPivot" instance=ExtResource("2_qhqgy")]
+transform = Transform3D(0.219719, 0, 0, 0, 0.219719, 3.27406e-09, 0, -3.27406e-09, 0.219719, 0, -1.724, 1.49012e-08)
+
+[node name="PitchPivot" type="Node3D" parent="TwistPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="TwistPivot/PitchPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.49012e-08, 0, -1.49012e-08, 1, 0, -0.316293, 2.94423)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DialogUI" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -12.0
+offset_right = 20.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_qhqgy")
+
+[node name="CombatUI" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_g2els")
+
+[node name="HitArea" type="Area3D" parent="."]
+transform = Transform3D(1.07864, -0.0156874, 0.0305343, 0.0169646, 0.998666, -0.000270011, -0.0302969, 0.000688762, 1.08694, -0.0490379, 0.138033, -0.0108641)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitArea"]
+transform = Transform3D(1.14079, 0, 0, 0, 1, 0, 0, 0, 1.18038, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_qhqgy")
